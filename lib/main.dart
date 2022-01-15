@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:watch_it/constant.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:watch_it/page_2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,9 +32,31 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.red,
-      ),
+      body: spashScreen(),
     );
+  }
+
+  Widget spashScreen() {
+    return AnimatedSplashScreen.withScreenFunction(
+      splash: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/logo.png"),
+          const CircularProgressIndicator(
+            color: Colors.white,
+          )
+        ],
+      ),
+      backgroundColor: kPrimaryColor,
+      splashIconSize: double.maxFinite,
+      screenFunction: _navigate,
+      splashTransition: SplashTransition.fadeTransition,
+      pageTransitionType: PageTransitionType.bottomToTop,
+    );
+  }
+
+  Future<Widget> _navigate() async {
+    await Future.delayed(const Duration(seconds: 10));
+    return const Page2();
   }
 }
