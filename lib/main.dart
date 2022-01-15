@@ -51,12 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
       splashIconSize: double.maxFinite,
       screenFunction: _navigate,
       splashTransition: SplashTransition.fadeTransition,
-      pageTransitionType: PageTransitionType.rightToLeft,
+      pageTransitionType: PageTransitionType.bottomToTop,
     );
   }
 
   Future<Widget> _navigate() async {
-    await Future.delayed(const Duration(seconds: 50));
+    await Future.delayed(const Duration(seconds: 10));
     return const Page2();
   }
 }
