@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/login/login.dart';
 import 'package:formz/formz.dart';
+import 'package:watch_it/page_2.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class LoginForm extends StatelessWidget {
         }
       },
       child: Align(
-        // alignment: const Alignment(0, -1 / 3),
+        alignment: const Alignment(0, -1 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -29,6 +31,8 @@ class LoginForm extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(12)),
             _RememberMeCheckbox(),
             _LoginButton(),
+            const Padding(padding: EdgeInsets.all(20)),
+            _SignUpText(),
           ],
         ),
       ),
@@ -120,5 +124,24 @@ class _LoginButton extends StatelessWidget {
               );
       },
     );
+  }
+}
+
+class _SignUpText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text.rich(
+        TextSpan(text: "Vous n’avez pas de compte ?  ", style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 16), children: [
+          TextSpan(
+              text: "Inscrivez-vous",
+              style: const TextStyle(color: Colors.blue, fontSize: 16),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(context, Page2.route(Colors.purple));
+                }),
+        ]),
+      )
+    ]);
   }
 }
