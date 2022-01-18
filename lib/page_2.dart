@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:watch_it/authentication/bloc/authentication_bloc.dart';
 
 // ignore: must_be_immutable
 class Page2 extends StatelessWidget {
@@ -16,6 +18,12 @@ class Page2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
+      child: ElevatedButton(
+        child: const Text('Logout'),
+        onPressed: () {
+          context.read<AuthenticationBloc>().add(AuthenticationLogoutRequested());
+        },
+      ),
     );
   }
 }
