@@ -19,7 +19,7 @@ class LoginForm extends StatelessWidget {
         }
       },
       child: Align(
-        alignment: const Alignment(0, -1 / 3),
+        // alignment: const Alignment(0, -1 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -27,6 +27,7 @@ class LoginForm extends StatelessWidget {
             const Padding(padding: EdgeInsets.all(12)),
             _PasswordInput(),
             const Padding(padding: EdgeInsets.all(12)),
+            _RememberMeCheckbox(),
             _LoginButton(),
           ],
         ),
@@ -68,6 +69,32 @@ class _PasswordInput extends StatelessWidget {
             labelText: 'password',
             errorText: state.password.invalid ? 'invalid password' : null,
           ),
+        );
+      },
+    );
+  }
+}
+
+class _RememberMeCheckbox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      buildWhen: (previous, current) => previous.rememberMe != current.rememberMe,
+      builder: (context, state) {
+        return Row(
+          children: [
+            Checkbox(
+              key: const Key('loginForm_rememberMe_checkBox'),
+              value: state.rememberMe,
+              onChanged: (rememberMe) => context.read<LoginBloc>().add(LoginRememberMeChanged(rememberMe!)),
+            ),
+            Text.rich(
+              TextSpan(
+                text: "Se souvenir de moi ?",
+                style: TextStyle(color: Colors.black.withOpacity(0.8), fontSize: 14),
+              ),
+            ),
+          ],
         );
       },
     );

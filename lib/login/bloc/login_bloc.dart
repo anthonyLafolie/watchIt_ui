@@ -14,6 +14,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         super(const LoginState()) {
     on<LoginUsernameChanged>(_onUsernameChanged);
     on<LoginPasswordChanged>(_onPasswordChanged);
+    on<LoginRememberMeChanged>(_onRememberMeChanged);
     on<LoginSubmitted>(_onSubmitted);
   }
 
@@ -41,12 +42,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     ));
   }
 
+  void _onRememberMeChanged(
+    LoginRememberMeChanged event,
+    Emitter<LoginState> emit,
+  ) {
+    emit(state.copyWith(
+      rememberMe: event.rememberMe,
+      status: Formz.validate([state.password, state.username]),
+    ));
+  }
+
   void _onSubmitted(
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
     if (state.status.isValidated) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
+      print(state.username);
+      print(state.password);
+      print(state.rememberMe);
       try {
         await _authenticationRepository.logIn(
           username: state.username.value,
