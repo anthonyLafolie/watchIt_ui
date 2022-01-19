@@ -13,19 +13,34 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: BlocProvider(
-          create: (context) {
-            return LoginBloc(
-              authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
-            );
+      resizeToAvoidBottomInset: false,
+      body: BlocProvider(
+        create: (context) {
+          return LoginBloc(
+            authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+          );
+        },
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
           },
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: const Scaffold(body: LoginForm()),
+          child: Stack(
+            children: [
+              Positioned(
+                child: Image.asset(
+                  "assets/images/wave_top.png",
+                  width: MediaQuery.of(context).size.width,
+                ),
+                top: 0,
+                left: 0,
+              ),
+              const Padding(padding: EdgeInsets.all(12), child: LoginForm()),
+              Positioned(
+                child: Image.asset("assets/images/wave_bottom.png"),
+                bottom: 0,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ],
           ),
         ),
       ),

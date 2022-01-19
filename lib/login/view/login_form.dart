@@ -21,17 +21,17 @@ class LoginForm extends StatelessWidget {
         }
       },
       child: Align(
-        alignment: const Alignment(0, -1 / 3),
+        alignment: const Alignment(0, -2 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _UsernameInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+            const Padding(padding: EdgeInsets.all(8)),
             _PasswordInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+            const Padding(padding: EdgeInsets.all(8)),
             _RememberMeCheckbox(),
             _LoginButton(),
-            const Padding(padding: EdgeInsets.all(20)),
+            const Padding(padding: EdgeInsets.all(12)),
             _SignUpText(),
           ],
         ),
@@ -134,10 +134,10 @@ class _SignUpText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text.rich(
-        TextSpan(text: "Vous n’avez pas de compte ?  ", style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 16), children: [
+        TextSpan(text: "Vous n’avez pas de compte ?  ", style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 14), children: [
           TextSpan(
               text: "Inscrivez-vous",
-              style: const TextStyle(color: Colors.blue, fontSize: 16),
+              style: const TextStyle(color: Colors.blue, fontSize: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   Navigator.push(context, Page2.route(Colors.purple));
