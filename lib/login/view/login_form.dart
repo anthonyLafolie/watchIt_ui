@@ -88,10 +88,12 @@ class _RememberMeCheckbox extends StatelessWidget {
         return Row(
           children: [
             Checkbox(
-              key: const Key('loginForm_rememberMe_checkBox'),
-              value: state.rememberMe,
-              onChanged: (rememberMe) => context.read<LoginBloc>().add(LoginRememberMeChanged(rememberMe!)),
-            ),
+                key: const Key('loginForm_rememberMe_checkBox'),
+                value: state.rememberMe,
+                onChanged: (rememberMe) {
+                  FocusScope.of(context).unfocus();
+                  context.read<LoginBloc>().add(LoginRememberMeChanged(rememberMe!));
+                }),
             Text.rich(
               TextSpan(
                 text: "Se souvenir de moi ?",

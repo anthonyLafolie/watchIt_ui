@@ -1,7 +1,7 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/login/login.dart';
+import 'package:watch_it/repository/authentication_repository/authentication_repository.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,7 +21,12 @@ class LoginScreen extends StatelessWidget {
               authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
             );
           },
-          child: const LoginForm(),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: const Scaffold(body: LoginForm()),
+          ),
         ),
       ),
     );
