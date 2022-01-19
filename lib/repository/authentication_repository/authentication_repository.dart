@@ -12,8 +12,21 @@ class AuthenticationRepository {
   final _controller = StreamController<AuthenticationStatus>();
 
   Stream<AuthenticationStatus> get status async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
-    yield AuthenticationStatus.unauthenticated;
+    late bool rememberMe;
+    late String username;
+    late String password;
+    await UserStorage.getRememberMe().then((value) => rememberMe = value ?? false);
+    if (rememberMe) {
+      await UserStorage.getUsername().then((value) => username = value ?? "");
+      await UserStorage.getPassword().then((value) => password = value ?? "");
+      try {
+        await logIn(username: username, password: password, rememberMe: rememberMe);
+      } on BadCredentialException {
+        yield AuthenticationStatus.unauthenticated;
+      }
+    } else {
+      yield AuthenticationStatus.unauthenticated;
+    }
     yield* _controller.stream;
   }
 
