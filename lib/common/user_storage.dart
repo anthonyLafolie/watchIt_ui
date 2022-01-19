@@ -32,5 +32,5 @@ class UserStorage {
 
   static Future deleteRememberMe() async => await _storage.delete(key: _keyRememberMe);
 
-  static Future<bool?> getRememberMe() async => await _storage.read(key: _keyRememberMe).then((value) => jsonDecode(value!));
+  static Future<bool?> getRememberMe() async => await _storage.read(key: _keyRememberMe).then((value) => value != null ? jsonDecode(value) : false);
 }
