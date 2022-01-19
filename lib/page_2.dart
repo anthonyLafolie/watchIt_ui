@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:watch_it/authentication/bloc/authentication_bloc.dart';
 import 'package:watch_it/common/user_storage.dart';
 
@@ -33,22 +33,22 @@ class _Page2State extends State<Page2> {
     super.initState();
     UserStorage.getUsername().then((value) {
       setState(() {
-        username = value!;
+        username = value ?? "";
       });
     });
     UserStorage.getPassword().then((value) {
       setState(() {
-        password = value!;
+        password = value ?? "";
       });
     });
     UserStorage.getRememberMe().then((value) {
       setState(() {
-        rememberMe = value!;
+        rememberMe = value ?? false;
       });
     });
     UserStorage.getToken().then((value) {
       setState(() {
-        token = value!;
+        token = value ?? "";
       });
     });
   }
