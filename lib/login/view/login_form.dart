@@ -16,7 +16,12 @@ class LoginForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
+              const SnackBar(
+                content: Text(
+                  "Nom d'utilisateur ou mot de passe incorrect",
+                ),
+                backgroundColor: Colors.red,
+              ),
             );
         }
       },
@@ -50,8 +55,8 @@ class _UsernameInput extends StatelessWidget {
           key: const Key('loginForm_usernameInput_textField'),
           onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
           decoration: InputDecoration(
-            labelText: 'username',
-            errorText: state.username.invalid ? 'invalid username' : null,
+            labelText: "Nom d'utilisateur",
+            errorText: state.username.invalid ? "Nom d'utilisateur incorrect" : null,
           ),
         );
       },
@@ -70,8 +75,8 @@ class _PasswordInput extends StatelessWidget {
           onChanged: (password) => context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            errorText: state.password.invalid ? 'invalid password' : null,
+            labelText: 'Mot de passe',
+            errorText: state.password.invalid ? 'Mot de passe incorrect' : null,
           ),
         );
       },
@@ -117,9 +122,10 @@ class _LoginButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('loginForm_continue_raisedButton'),
-                child: const Text('Login'),
+                child: const Text('Se connecter'),
                 onPressed: state.status.isValidated
                     ? () {
+                        FocusScope.of(context).unfocus();
                         context.read<LoginBloc>().add(const LoginSubmitted());
                       }
                     : null,
