@@ -9,7 +9,8 @@ import 'package:watch_it/repository/user_repository/user_repository.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
     required UserRepository userRepository,
@@ -25,7 +26,8 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
-  late StreamSubscription<AuthenticationStatus> _authenticationStatusSubscription;
+  late StreamSubscription<AuthenticationStatus>
+      _authenticationStatusSubscription;
 
   @override
   Future<void> close() {
@@ -43,7 +45,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
         final user = await _tryGetUser();
-        return emit(user != null ? AuthenticationState.authenticated(user) : const AuthenticationState.unauthenticated());
+        return emit(user != null
+            ? AuthenticationState.authenticated(user)
+            : const AuthenticationState.unauthenticated());
       default:
         return emit(const AuthenticationState.unknown());
     }
