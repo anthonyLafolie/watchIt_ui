@@ -3,10 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:watch_it/authentication/bloc/authentication_bloc.dart';
 import 'package:watch_it/common/user_storage.dart';
 
-// ignore: must_be_immutable
 class Page2 extends StatefulWidget {
-  Color color;
-  Page2({Key? key, required this.color}) : super(key: key);
+  final Color color;
+  const Page2({Key? key, required this.color}) : super(key: key);
 
   static Route route(Color color) {
     return MaterialPageRoute<void>(
