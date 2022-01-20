@@ -14,10 +14,8 @@ class SignupForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(
-                content: Text(
-                  "Nom d'utilisateur ou mot de passe incorrect",
-                ),
+              SnackBar(
+                content: Text(state.errorMessage),
                 backgroundColor: Colors.red,
               ),
             );
@@ -95,7 +93,7 @@ class _EmailInput extends StatelessWidget {
               context.read<SignupBloc>().add(SignupEmailChanged(email)),
           decoration: InputDecoration(
             labelText: 'Email',
-            errorText: state.password.invalid ? 'Email incorrect' : null,
+            errorText: state.email.invalid ? 'Email incorrect' : null,
           ),
         );
       },

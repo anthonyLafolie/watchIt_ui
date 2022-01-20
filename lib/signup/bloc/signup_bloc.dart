@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
+import 'package:watch_it/common/exception/bad_credential_exception.dart';
+import 'package:watch_it/common/exception/conflit_exception.dart';
 import 'package:watch_it/repository/authentication_repository/authentication_repository.dart';
 import 'package:watch_it/signup/signup.dart';
 
@@ -57,10 +59,21 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     if (state.status.isValidated) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       try {
-        await Future.delayed(const Duration(seconds: 2));
+        await _authenticationRepository.signup(
+            username: state.username.value,
+            email: state.email.value,
+            password: state.password.value,
+            rememberMe: state.rememberMe);
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
-      } on Exception {
-        emit(state.copyWith(status: FormzStatus.submissionFailure));
+      } on BadCredentialException {
+        emit(state.copyWith(
+            status: FormzStatus.submissionFailure,
+            errorMessage:
+                "Nom d'utilisateur, email ou mot de passe incorrect"));
+      } on ConflitException {
+        emit(state.copyWith(
+            status: FormzStatus.submissionFailure,
+            errorMessage: "Nom d'utilisateur ou email déjà utilisé"));
       }
     }
   }
