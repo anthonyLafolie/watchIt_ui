@@ -1,45 +1,39 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watch_it/login/login.dart';
 import 'package:formz/formz.dart';
-import 'package:watch_it/signup/view/signup_screen.dart';
+import 'package:watch_it/signup/signup.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class SignupForm extends StatelessWidget {
+  const SignupForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<SignupBloc, SignupState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(
-                content: Text(
-                  "Nom d'utilisateur ou mot de passe incorrect",
-                ),
+              SnackBar(
+                content: Text(state.errorMessage),
                 backgroundColor: Colors.red,
               ),
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -2 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _UsernameInput(),
-            const Padding(padding: EdgeInsets.all(8)),
-            _PasswordInput(),
-            const Padding(padding: EdgeInsets.all(8)),
-            _RememberMeCheckbox(),
-            _LoginButton(),
-            const Padding(padding: EdgeInsets.all(12)),
-            _SignUpText(),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _UsernameInput(),
+          const Padding(padding: EdgeInsets.all(8)),
+          _EmailInput(),
+          const Padding(padding: EdgeInsets.all(8)),
+          _PasswordInput(),
+          const Padding(padding: EdgeInsets.all(8)),
+          _RememberMeCheckbox(),
+          const Padding(padding: EdgeInsets.all(8)),
+          _SignupButton(),
+        ],
       ),
     );
   }
@@ -48,13 +42,13 @@ class LoginForm extends StatelessWidget {
 class _UsernameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<SignupBloc, SignupState>(
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_usernameInput_textField'),
+          key: const Key('signupForm_usernameInput_textField'),
           onChanged: (username) =>
-              context.read<LoginBloc>().add(LoginUsernameChanged(username)),
+              context.read<SignupBloc>().add(SignupUsernameChanged(username)),
           decoration: InputDecoration(
             labelText: "Nom d'utilisateur",
             errorText:
@@ -69,13 +63,13 @@ class _UsernameInput extends StatelessWidget {
 class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<SignupBloc, SignupState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
+          key: const Key('signupForm_passwordInput_textField'),
           onChanged: (password) =>
-              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
+              context.read<SignupBloc>().add(SignupPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'Mot de passe',
@@ -87,23 +81,43 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
+class _EmailInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignupBloc, SignupState>(
+      buildWhen: (previous, current) => previous.email != current.email,
+      builder: (context, state) {
+        return TextField(
+          key: const Key('signupForm_emailInput_textField'),
+          onChanged: (email) =>
+              context.read<SignupBloc>().add(SignupEmailChanged(email)),
+          decoration: InputDecoration(
+            labelText: 'Email',
+            errorText: state.email.invalid ? 'Email incorrect' : null,
+          ),
+        );
+      },
+    );
+  }
+}
+
 class _RememberMeCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<SignupBloc, SignupState>(
       buildWhen: (previous, current) =>
           previous.rememberMe != current.rememberMe,
       builder: (context, state) {
         return Row(
           children: [
             Checkbox(
-                key: const Key('loginForm_rememberMe_checkBox'),
+                key: const Key('signupForm_rememberMe_checkBox'),
                 value: state.rememberMe,
                 onChanged: (rememberMe) {
                   FocusScope.of(context).unfocus();
                   context
-                      .read<LoginBloc>()
-                      .add(LoginRememberMeChanged(rememberMe!));
+                      .read<SignupBloc>()
+                      .add(SignupRememberMeChanged(rememberMe!));
                 }),
             Text.rich(
               TextSpan(
@@ -119,47 +133,25 @@ class _RememberMeCheckbox extends StatelessWidget {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class _SignupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocBuilder<SignupBloc, SignupState>(
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
             : ElevatedButton(
-                key: const Key('loginForm_continue_raisedButton'),
-                child: const Text('Se connecter'),
+                key: const Key('signupForm_continue_raisedButton'),
+                child: const Text("S'inscrire"),
                 onPressed: state.status.isValidated
                     ? () {
                         FocusScope.of(context).unfocus();
-                        context.read<LoginBloc>().add(const LoginSubmitted());
+                        context.read<SignupBloc>().add(const SignupSubmitted());
                       }
                     : null,
               );
       },
     );
-  }
-}
-
-class _SignUpText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text.rich(
-        TextSpan(
-            text: "Vous n’avez pas de compte ?  ",
-            style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 14),
-            children: [
-              TextSpan(
-                  text: "Inscrivez-vous",
-                  style: const TextStyle(color: Colors.blue, fontSize: 14),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.push(context, SignupScreen.route());
-                    }),
-            ]),
-      )
-    ]);
   }
 }

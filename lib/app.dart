@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/authentication/authentication.dart';
 import 'package:watch_it/login/login.dart';
@@ -47,6 +48,9 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     return MaterialApp(
       title: 'Watch It',
       debugShowCheckedModeBanner: false,

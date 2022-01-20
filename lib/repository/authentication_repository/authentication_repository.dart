@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:watch_it/common/exception/bad_credential_exception.dart';
+import 'package:watch_it/common/exception/conflit_exception.dart';
 import 'package:watch_it/common/user_storage.dart';
 import 'package:watch_it/service/auth_service.dart';
 
@@ -15,12 +16,14 @@ class AuthenticationRepository {
     late bool rememberMe;
     late String username;
     late String password;
-    await UserStorage.getRememberMe().then((value) => rememberMe = value ?? false);
+    await UserStorage.getRememberMe()
+        .then((value) => rememberMe = value ?? false);
     if (rememberMe) {
       await UserStorage.getUsername().then((value) => username = value ?? "");
       await UserStorage.getPassword().then((value) => password = value ?? "");
       try {
-        await logIn(username: username, password: password, rememberMe: rememberMe);
+        await logIn(
+            username: username, password: password, rememberMe: rememberMe);
       } on BadCredentialException {
         yield AuthenticationStatus.unauthenticated;
       }
@@ -30,7 +33,10 @@ class AuthenticationRepository {
     yield* _controller.stream;
   }
 
-  Future<void> logIn({required String username, required String password, required bool rememberMe}) async {
+  Future<void> logIn(
+      {required String username,
+      required String password,
+      required bool rememberMe}) async {
     Response response = await AuthService().login(username, password);
     switch (response.statusCode) {
       case 200:
@@ -45,6 +51,30 @@ class AuthenticationRepository {
       case 404:
       default:
         throw BadCredentialException("Login or password are incorrect");
+    }
+  }
+
+  Future<void> signup(
+      {required String username,
+      required String email,
+      required String password,
+      required bool rememberMe}) async {
+    Response response = await AuthService().signup(username, email, password);
+    switch (response.statusCode) {
+      case 201:
+        if (rememberMe) {
+          UserStorage.setUsername(username);
+          UserStorage.setPassword(password);
+        }
+        UserStorage.setRememberMe(rememberMe);
+        UserStorage.setToken(jsonDecode(response.body)["token"]);
+        _controller.add(AuthenticationStatus.authenticated);
+        break;
+      case 409:
+        throw ConflitException("Username or email aleready used");
+      case 404:
+      default:
+        throw BadCredentialException("Some credentials are incorrect");
     }
   }
 
