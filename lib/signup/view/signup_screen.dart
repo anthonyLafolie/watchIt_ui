@@ -20,13 +20,8 @@ class SignupScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: const BackButton(
-            color: kPrimaryColor,
-          ),
           elevation: 0.0,
-          backgroundColor: Colors.white,
         ),
-        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: BlocProvider(
           create: (context) {

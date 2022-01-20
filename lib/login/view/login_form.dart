@@ -105,11 +105,10 @@ class _RememberMeCheckbox extends StatelessWidget {
                       .read<LoginBloc>()
                       .add(LoginRememberMeChanged(rememberMe!));
                 }),
-            Text.rich(
+            const Text.rich(
               TextSpan(
                 text: "Se souvenir de moi ?",
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.8), fontSize: 14),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ],
@@ -149,7 +148,7 @@ class _SignUpText extends StatelessWidget {
       Text.rich(
         TextSpan(
             text: "Vous n’avez pas de compte ?  ",
-            style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 14),
+            style: const TextStyle(fontSize: 14),
             children: [
               TextSpan(
                   text: "Inscrivez-vous",

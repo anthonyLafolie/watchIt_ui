@@ -119,11 +119,10 @@ class _RememberMeCheckbox extends StatelessWidget {
                       .read<SignupBloc>()
                       .add(SignupRememberMeChanged(rememberMe!));
                 }),
-            Text.rich(
+            const Text.rich(
               TextSpan(
                 text: "Se souvenir de moi ?",
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.8), fontSize: 14),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ],
