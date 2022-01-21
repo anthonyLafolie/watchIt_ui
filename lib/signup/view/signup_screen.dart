@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watch_it/common/constant.dart';
 import 'package:watch_it/repository/authentication_repository/authentication_repository.dart';
 import 'package:watch_it/signup/signup.dart';
 import 'package:watch_it/signup/view/signup_form.dart';
@@ -20,13 +19,8 @@ class SignupScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: const BackButton(
-            color: kPrimaryColor,
-          ),
           elevation: 0.0,
-          backgroundColor: Colors.white,
         ),
-        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: BlocProvider(
           create: (context) {

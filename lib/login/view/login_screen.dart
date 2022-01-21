@@ -17,31 +17,17 @@ class LoginScreen extends StatelessWidget {
       body: BlocProvider(
         create: (context) {
           return LoginBloc(
-            authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+            authenticationRepository:
+                RepositoryProvider.of<AuthenticationRepository>(context),
           );
         },
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
-          child: Stack(
-            children: [
-              Positioned(
-                child: Image.asset(
-                  "assets/images/wave_top.png",
-                  width: MediaQuery.of(context).size.width,
-                ),
-                top: 0,
-                left: 0,
-              ),
-              const Padding(padding: EdgeInsets.all(12), child: LoginForm()),
-              Positioned(
-                child: Image.asset("assets/images/wave_bottom.png"),
-                bottom: 0,
-                width: MediaQuery.of(context).size.width,
-              ),
-            ],
-          ),
+          child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+              child: LoginForm()),
         ),
       ),
     );
