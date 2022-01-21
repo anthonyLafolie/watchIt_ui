@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_it/authentication/authentication.dart';
 import 'package:watch_it/common/theme_provider.dart';
+import 'package:watch_it/home/view/home_screen.dart';
 import 'package:watch_it/login/login.dart';
-import 'package:watch_it/page_2.dart';
 import 'package:watch_it/splash/splash.dart';
 
 import 'repository/authentication_repository/authentication_repository.dart';
@@ -68,7 +68,7 @@ class _AppViewState extends State<AppView> {
                   switch (state.status) {
                     case AuthenticationStatus.authenticated:
                       _navigator.pushAndRemoveUntil<void>(
-                        Page2.route(Colors.red),
+                        HomeScreen.route(),
                         (route) => false,
                       );
                       break;
