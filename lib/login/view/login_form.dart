@@ -20,7 +20,6 @@ class LoginForm extends StatelessWidget {
                 content: Text(
                   "Nom d'utilisateur ou mot de passe incorrect",
                 ),
-                backgroundColor: Colors.red,
               ),
             );
         }
