@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData themeData = Themes.themeLight;
+  ThemeData themeData = Themes.themeDark;
 
   void toggleTheme(bool darkMode) {
     themeData = darkMode ? Themes.themeDark : Themes.themeLight;
@@ -17,12 +17,12 @@ class Themes {
       backgroundColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.white),
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.grey,
-      selectedIconTheme: IconThemeData(color: Colors.purple),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Colors.grey.shade900,
+      selectedItemColor: Colors.purple,
       unselectedItemColor: Colors.white,
-      unselectedLabelStyle: TextStyle(color: Colors.white),
       showSelectedLabels: true,
+      type: BottomNavigationBarType.fixed,
     ),
     iconTheme: const IconThemeData(color: Colors.white),
     fontFamily: 'Raleway',
@@ -37,10 +37,10 @@ class Themes {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Colors.black,
-      selectedIconTheme: IconThemeData(color: Colors.purple),
+      selectedItemColor: Colors.purple,
       unselectedItemColor: Colors.white,
-      unselectedLabelStyle: TextStyle(color: Colors.white),
       showSelectedLabels: true,
+      type: BottomNavigationBarType.fixed,
     ),
     iconTheme: const IconThemeData(color: Colors.black),
     fontFamily: 'Raleway',
