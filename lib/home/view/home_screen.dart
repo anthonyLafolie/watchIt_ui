@@ -44,7 +44,6 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: _children[selectedTab.index],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
         currentIndex: selectedTab.index,
         onTap: (value) =>
             context.read<HomeCubit>().setTab(HomeTab.values[value]),
