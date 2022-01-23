@@ -27,6 +27,9 @@ class Themes {
     iconTheme: const IconThemeData(color: Colors.white),
     fontFamily: 'Raleway',
     snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.red),
+    splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
   );
 
   static final themeLight = ThemeData(
@@ -46,5 +49,8 @@ class Themes {
     iconTheme: const IconThemeData(color: Colors.black),
     fontFamily: 'Raleway',
     snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.red),
+    splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
   );
 }
