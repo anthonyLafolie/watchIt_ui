@@ -76,16 +76,11 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: InkWell(
-                        child: const Text(
-                          "Supprimer mon compte",
-                          style: TextStyle(color: Colors.red, fontSize: 14),
-                        ),
-                        onTap: () => {}),
+                    child: _DeleteAccount(),
                   ),
                 ),
                 Expanded(flex: 4, child: Container()),
@@ -119,5 +114,44 @@ class _DarkModeSwitch extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _DeleteAccount extends StatelessWidget {
+  const _DeleteAccount({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        child: const Text(
+          "Supprimer mon compte",
+          style: TextStyle(color: Colors.red, fontSize: 14),
+        ),
+        onTap: () => {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  content: const Text(
+                      "Voulez-vous vraiment supprimer votre compte ?"),
+                  // actionsAlignment: MainAxisAlignment.spaceEvenly,
+                  actionsPadding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Annuler'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Accepter'),
+                    ),
+                  ],
+                ),
+              )
+            });
   }
 }
