@@ -1,7 +1,7 @@
 import 'package:formz/formz.dart';
 import 'package:email_validator/email_validator.dart';
 
-enum EmailValidationError { empty, BadFormat }
+enum EmailValidationError { empty, badFormat }
 
 class Email extends FormzInput<String, EmailValidationError> {
   const Email.pure() : super.pure('');
@@ -10,7 +10,7 @@ class Email extends FormzInput<String, EmailValidationError> {
   @override
   EmailValidationError? validator(String value) {
     if (value.isEmpty) return EmailValidationError.empty;
-    if (!EmailValidator.validate(value)) return EmailValidationError.BadFormat;
+    if (!EmailValidator.validate(value)) return EmailValidationError.badFormat;
     return null;
   }
 }

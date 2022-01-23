@@ -16,7 +16,6 @@ class SignupForm extends StatelessWidget {
             ..showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage),
-                backgroundColor: Colors.red,
               ),
             );
         }
