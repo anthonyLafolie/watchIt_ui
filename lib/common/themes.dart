@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 
-class ThemeProvider extends ChangeNotifier {
-  ThemeData themeData = Themes.themeDark;
-
-  void toggleTheme(bool darkMode) {
-    themeData = darkMode ? Themes.themeDark : Themes.themeLight;
-    notifyListeners();
-  }
-}
-
 class Themes {
   static final themeDark = ThemeData(
     scaffoldBackgroundColor: Colors.black,
