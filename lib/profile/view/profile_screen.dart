@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:watch_it/authentication/authentication.dart';
 import 'package:watch_it/profile/profile.dart';
 
@@ -55,23 +57,9 @@ class Setting extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Mode sombre",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      Switch(
-                        value: true,
-                        onChanged: (value) {
-                          print("switch");
-                        },
-                      ),
-                    ],
-                  ),
+                  child: _DarkModeSwitch(),
                 ),
                 Expanded(
                   flex: 2,
@@ -106,6 +94,30 @@ class Setting extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _DarkModeSwitch extends StatelessWidget {
+  const _DarkModeSwitch({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = ThemeProvider.themeOf(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          "Mode sombre",
+          style: TextStyle(fontSize: 14),
+        ),
+        Switch(
+          value: themeProvider.id == "dark",
+          onChanged: (value) {
+            ThemeProvider.controllerOf(context).nextTheme();
+          },
+        ),
+      ],
     );
   }
 }
