@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/home/home.dart';
-import 'package:watch_it/login/login.dart';
 import 'package:watch_it/page_2.dart';
+import 'package:watch_it/profile/view/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,9 +33,7 @@ class HomeView extends StatelessWidget {
     const Page2(
       color: Colors.blue,
     ),
-    const Page2(
-      color: Colors.purple,
-    )
+    const ProfileScreen()
   ];
 
   @override
