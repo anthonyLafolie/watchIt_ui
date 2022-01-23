@@ -21,6 +21,10 @@ class Themes {
     splashFactory: NoSplash.splashFactory,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.white),
+      trackColor: MaterialStateProperty.all(Colors.purple),
+    ),
   );
 
   static final themeLight = ThemeData(
@@ -43,5 +47,9 @@ class Themes {
     splashFactory: NoSplash.splashFactory,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.black),
+      trackColor: MaterialStateProperty.all(Colors.grey),
+    ),
   );
 }
