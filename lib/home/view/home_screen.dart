@@ -56,11 +56,11 @@ class HomeView extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: "Watch list",
+            label: "Vos listes",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: "profile",
+            label: "Profil",
           ),
         ],
       ),
