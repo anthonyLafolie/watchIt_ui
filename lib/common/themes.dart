@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 
-class ThemeProvider extends ChangeNotifier {
-  ThemeData themeData = Themes.themeDark;
-
-  void toggleTheme(bool darkMode) {
-    themeData = darkMode ? Themes.themeDark : Themes.themeLight;
-    notifyListeners();
-  }
-}
-
 class Themes {
   static final themeDark = ThemeData(
     scaffoldBackgroundColor: Colors.black,
@@ -27,6 +18,13 @@ class Themes {
     iconTheme: const IconThemeData(color: Colors.white),
     fontFamily: 'Raleway',
     snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.red),
+    splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.white),
+      trackColor: MaterialStateProperty.all(Colors.purple),
+    ),
   );
 
   static final themeLight = ThemeData(
@@ -46,5 +44,12 @@ class Themes {
     iconTheme: const IconThemeData(color: Colors.black),
     fontFamily: 'Raleway',
     snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.red),
+    splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(Colors.black),
+      trackColor: MaterialStateProperty.all(Colors.grey),
+    ),
   );
 }

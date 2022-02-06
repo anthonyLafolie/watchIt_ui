@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:watch_it/authentication/authentication.dart';
-import 'package:watch_it/common/theme_provider.dart';
+import 'package:watch_it/common/themes.dart';
 import 'package:watch_it/home/view/home_screen.dart';
 import 'package:watch_it/login/login.dart';
 import 'package:watch_it/splash/splash.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 import 'repository/authentication_repository/authentication_repository.dart';
 import 'repository/user_repository/user_repository.dart';
@@ -53,12 +53,18 @@ class _AppViewState extends State<AppView> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-    return ChangeNotifierProvider(
-        create: (_) => ThemeProvider(),
-        builder: (context, _) {
-          final themeProvider = Provider.of<ThemeProvider>(context);
-          return MaterialApp(
-            theme: themeProvider.themeData,
+    return ThemeProvider(
+      saveThemesOnChange: true,
+      loadThemeOnInit: true,
+      themes: [
+        AppTheme(
+            id: "light", data: Themes.themeLight, description: "Light theme"),
+        AppTheme(id: "dark", data: Themes.themeDark, description: "Dark theme"),
+      ],
+      child: ThemeConsumer(
+        child: Builder(
+          builder: (themeContext) => MaterialApp(
+            theme: ThemeProvider.themeOf(themeContext).data,
             title: 'Watch It',
             debugShowCheckedModeBanner: false,
             navigatorKey: _navigatorKey,
@@ -86,7 +92,9 @@ class _AppViewState extends State<AppView> {
               );
             },
             onGenerateRoute: (_) => SplashScreen.route(),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 }
