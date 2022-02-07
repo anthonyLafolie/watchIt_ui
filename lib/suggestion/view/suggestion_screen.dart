@@ -1,0 +1,152 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+class SuggestionScreen extends StatelessWidget {
+  const SuggestionScreen({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const SuggestionScreen());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: double.infinity,
+        scrollDirection: Axis.vertical,
+        viewportFraction: 1,
+      ),
+      items: const [
+        CarouselItem(
+            imgUrl:
+                "https://image.tmdb.org/t/p/original/3SyG7dq2q0ollxJ4pSsrqcfRmVj.jpg"),
+        CarouselItem(
+            imgUrl:
+                "https://image.tmdb.org/t/p/original/5eSyG66a7yBtZLIA5zunhaO2PaE.jpg"),
+        CarouselItem(
+            imgUrl:
+                "https://image.tmdb.org/t/p/original/w1cmavTc0IwISr9ypI1XkBtxhVK.jpg"),
+      ],
+    );
+  }
+}
+
+class CarouselItem extends StatelessWidget {
+  final String imgUrl;
+  const CarouselItem({Key? key, required this.imgUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Image.network(
+          imgUrl,
+          fit: BoxFit.fitHeight,
+          height: double.infinity,
+        ),
+        Column(
+          children: [
+            SizedBox(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Global",
+                    style: TextStyle(backgroundColor: Colors.black87),
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    "Pour vous",
+                    style: TextStyle(backgroundColor: Colors.black87),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          "Spider-Man: No Way Home",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(backgroundColor: Colors.black87),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "Après les évènements liés à l'affrontement avec Mystério, l'identité secrète de Spider-Man a été révélée. Il est poursuivi par le gouvernement américain, qui l'accuse du meurtre de Mystério, et est traqué par les médias. Cet évènement a également des conséquences terribles sur la vie de sa petite-amie M. J. et de son meilleur ami Ned. Désemparé, Peter Parker demande alors de l'aide au Docteur Strange. Ce dernier lance un sort pour que tout le monde oublie que Peter est Spider-Man. Mais les choses ne se passent pas comme prévu et cette action altère la stabilité de l'espace-temps. Cela ouvre le « Multivers », un concept terrifiant dont ils ne savent quasiment rien.",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 5,
+                          style: TextStyle(backgroundColor: Colors.black87),
+                        ),
+                        SizedBox(height: 30),
+                      ],
+                    ),
+                  )),
+                  SizedBox(
+                    width: 80,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 75,
+                          child: Center(
+                            child: SizedBox(
+                              height: 45,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print("ADD WATCH LIST");
+                                },
+                                child:
+                                    const Icon(Icons.list, color: Colors.black),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 60,
+                          child: Center(
+                            child: SizedBox(
+                              height: 45,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  print("ADD ALREADY SEEN LIST");
+                                },
+                                child: const Icon(Icons.remove_red_eye,
+                                    color: Colors.black),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  primary: Colors.white,
+                                  onPrimary: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 25)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
