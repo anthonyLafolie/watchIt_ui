@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:bordered_text/bordered_text.dart';
 
 class SuggestionScreen extends StatelessWidget {
   const SuggestionScreen({Key? key}) : super(key: key);
@@ -46,6 +47,10 @@ class CarouselItem extends StatelessWidget {
           fit: BoxFit.fitHeight,
           height: double.infinity,
         ),
+        // Container(
+        //   height: double.infinity,
+        //   color: Colors.white,
+        // ),
         Column(
           children: [
             SizedBox(
@@ -53,15 +58,19 @@ class CarouselItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Global",
-                    style: TextStyle(backgroundColor: Colors.black87),
+                children: [
+                  BorderedText(
+                    strokeWidth: 5.0,
+                    strokeJoin: StrokeJoin.round,
+                    strokeColor: Colors.black,
+                    child: const Text("Global"),
                   ),
-                  SizedBox(width: 20),
-                  Text(
-                    "Pour vous",
-                    style: TextStyle(backgroundColor: Colors.black87),
+                  const SizedBox(width: 20),
+                  BorderedText(
+                    strokeWidth: 5.0,
+                    strokeJoin: StrokeJoin.round,
+                    strokeColor: Colors.black,
+                    child: const Text("Pour vous"),
                   )
                 ],
               ),
@@ -71,24 +80,37 @@ class CarouselItem extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(15),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          "Spider-Man: No Way Home",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(backgroundColor: Colors.black87),
+                      children: [
+                        BorderedText(
+                          strokeWidth: 5.0,
+                          strokeJoin: StrokeJoin.round,
+                          strokeColor: Colors.black,
+                          child: const Text(
+                            "Spider-Man: No Way Home",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              // backgroundColor: Colors.black87,
+                              shadows: [
+                                Shadow(blurRadius: 12, color: Colors.black)
+                              ],
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 15),
-                        Text(
-                          "Après les évènements liés à l'affrontement avec Mystério, l'identité secrète de Spider-Man a été révélée. Il est poursuivi par le gouvernement américain, qui l'accuse du meurtre de Mystério, et est traqué par les médias. Cet évènement a également des conséquences terribles sur la vie de sa petite-amie M. J. et de son meilleur ami Ned. Désemparé, Peter Parker demande alors de l'aide au Docteur Strange. Ce dernier lance un sort pour que tout le monde oublie que Peter est Spider-Man. Mais les choses ne se passent pas comme prévu et cette action altère la stabilité de l'espace-temps. Cela ouvre le « Multivers », un concept terrifiant dont ils ne savent quasiment rien.",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 5,
-                          style: TextStyle(backgroundColor: Colors.black87),
+                        const SizedBox(height: 15),
+                        BorderedText(
+                          strokeWidth: 5.0,
+                          strokeColor: Colors.black,
+                          child: const Text(
+                            "Après les évènements liés à l'affrontement avec Mystério, l'identité secrète de Spider-Man a été révélée. Il est poursuivi par le gouvernement américain, qui l'accuse du meurtre de Mystério, et est traqué par les médias. Cet évènement a également des conséquences terribles sur la vie de sa petite-amie M. J. et de son meilleur ami Ned. Désemparé, Peter Parker demande alors de l'aide au Docteur Strange. Ce dernier lance un sort pour que tout le monde oublie que Peter est Spider-Man. Mais les choses ne se passent pas comme prévu et cette action altère la stabilité de l'espace-temps. Cela ouvre le « Multivers », un concept terrifiant dont ils ne savent quasiment rien.",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 5,
+                          ),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                       ],
                     ),
                   )),

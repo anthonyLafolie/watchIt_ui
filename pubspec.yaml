@@ -45,6 +45,7 @@ dependencies:
   provider: 6.0.2
   theme_provider: ^0.5.0
   carousel_slider: ^4.0.0
+  bordered_text: ^2.0.0
 
 
 
