@@ -1,23 +1,20 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:watch_it/model/movie.dart';
 
 class CarouselItem extends StatelessWidget {
-  final String imgUrl;
-  const CarouselItem({Key? key, required this.imgUrl}) : super(key: key);
+  final Movie movie;
+  const CarouselItem({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Image.network(
-          "https://image.tmdb.org/t/p/original$imgUrl",
+          "https://image.tmdb.org/t/p/original${movie.posterPath}",
           fit: BoxFit.fitHeight,
           height: double.infinity,
         ),
-        // Container(
-        //   height: double.infinity,
-        //   color: Colors.white,
-        // ),
         Column(
           children: [
             SizedBox(
@@ -56,10 +53,10 @@ class CarouselItem extends StatelessWidget {
                           strokeWidth: 5.0,
                           strokeJoin: StrokeJoin.round,
                           strokeColor: Colors.black,
-                          child: const Text(
-                            "Spider-Man: No Way Home",
+                          child: Text(
+                            movie.title,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               // backgroundColor: Colors.black87,
                               shadows: [
                                 Shadow(blurRadius: 12, color: Colors.black)
@@ -71,8 +68,8 @@ class CarouselItem extends StatelessWidget {
                         BorderedText(
                           strokeWidth: 5.0,
                           strokeColor: Colors.black,
-                          child: const Text(
-                            "Après les évènements liés à l'affrontement avec Mystério, l'identité secrète de Spider-Man a été révélée. Il est poursuivi par le gouvernement américain, qui l'accuse du meurtre de Mystério, et est traqué par les médias. Cet évènement a également des conséquences terribles sur la vie de sa petite-amie M. J. et de son meilleur ami Ned. Désemparé, Peter Parker demande alors de l'aide au Docteur Strange. Ce dernier lance un sort pour que tout le monde oublie que Peter est Spider-Man. Mais les choses ne se passent pas comme prévu et cette action altère la stabilité de l'espace-temps. Cela ouvre le « Multivers », un concept terrifiant dont ils ne savent quasiment rien.",
+                          child: Text(
+                            movie.overview,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
                           ),

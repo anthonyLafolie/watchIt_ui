@@ -31,7 +31,9 @@ class SuggestionScreen extends StatelessWidget {
                     viewportFraction: 1,
                   ),
                   items: state.movies
-                      .map((e) => CarouselItem(imgUrl: e.posterPath))
+                      .map((e) => CarouselItem(
+                            movie: e,
+                          ))
                       .toList());
             }
             return Container();
