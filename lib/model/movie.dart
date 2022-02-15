@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 List<Movie> moviesFromJson(String str) =>
     List<Movie>.from(jsonDecode(str)["results"].map((x) {
       try {
@@ -10,12 +12,12 @@ List<Movie> moviesFromJson(String str) =>
     }))
       ..removeWhere((element) => element.id == -999);
 
-class Movie {
-  int id;
-  String title;
-  String posterPath;
-  String overview;
-  Movie({
+class Movie extends Equatable {
+  final int id;
+  final String title;
+  final String posterPath;
+  final String overview;
+  const Movie({
     required this.id,
     required this.title,
     required this.posterPath,
@@ -30,4 +32,7 @@ class Movie {
       overview: parsedJson['overview'],
     );
   }
+
+  @override
+  List<Object> get props => [id, title, posterPath, overview];
 }

@@ -10,6 +10,7 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
   SuggestionBloc() : super(const SuggestionState([])) {
     on<SuggestionLoading>(_onSuggestionLoading);
     on<SuggestionLoaded>(_onSuggestionLoaded);
+    on<AddWatchList>(_onAddWatchList);
   }
 
   void _onSuggestionLoading(
@@ -23,5 +24,17 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
   void _onSuggestionLoaded(
       SuggestionLoaded event, Emitter<SuggestionState> emit) async {
     emit(SuggestionLoadedState(event.movies));
+  }
+
+  void _onAddWatchList(
+      AddWatchList event, Emitter<SuggestionState> emit) async {
+    List<Movie> movies = state.movies
+        .map((e) => Movie(
+            id: e.id,
+            overview: e.overview,
+            posterPath: e.posterPath,
+            title: e.title))
+        .toList();
+    emit(SuggestionLoadedState(movies..remove(event.movies.first)));
   }
 }

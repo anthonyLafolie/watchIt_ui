@@ -1,6 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/suggestion/bloc/suggestion_bloc.dart';
 
 class CarouselItem extends StatelessWidget {
   final Movie movie;
@@ -93,8 +95,10 @@ class CarouselItem extends StatelessWidget {
                             child: SizedBox(
                               height: 45,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  print("ADD WATCH LIST");
+                                onPressed: () async {
+                                  context
+                                      .read<SuggestionBloc>()
+                                      .add(AddWatchList(movie));
                                 },
                                 child:
                                     const Icon(Icons.list, color: Colors.black),

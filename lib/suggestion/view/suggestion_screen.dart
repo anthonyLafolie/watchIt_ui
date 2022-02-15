@@ -18,7 +18,7 @@ class SuggestionScreen extends StatelessWidget {
         return SuggestionBloc()..add(SuggestionLoading());
       },
       child: BlocBuilder<SuggestionBloc, SuggestionState>(
-          buildWhen: (previous, current) => previous != current,
+          buildWhen: (previous, current) => previous.movies != current.movies,
           builder: (context, state) {
             if (state is SuggestionLoadingState) {
               return const Center(child: CircularProgressIndicator());
