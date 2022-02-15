@@ -27,14 +27,20 @@ class CarouselItem extends StatelessWidget {
                     strokeWidth: 5.0,
                     strokeJoin: StrokeJoin.round,
                     strokeColor: Colors.black,
-                    child: const Text("Global"),
+                    child: const Text(
+                      "Global",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   const SizedBox(width: 20),
                   BorderedText(
                     strokeWidth: 5.0,
                     strokeJoin: StrokeJoin.round,
                     strokeColor: Colors.black,
-                    child: const Text("Pour vous"),
+                    child: const Text(
+                      "Pour vous",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   )
                 ],
               ),
@@ -56,12 +62,9 @@ class CarouselItem extends StatelessWidget {
                           child: Text(
                             movie.title,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              // backgroundColor: Colors.black87,
-                              shadows: [
-                                Shadow(blurRadius: 12, color: Colors.black)
-                              ],
-                            ),
+                            style: const TextStyle(shadows: [
+                              Shadow(blurRadius: 12, color: Colors.black)
+                            ], color: Colors.white),
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -72,6 +75,7 @@ class CarouselItem extends StatelessWidget {
                             movie.overview,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         const SizedBox(height: 30),
