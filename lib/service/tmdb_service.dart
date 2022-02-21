@@ -32,7 +32,7 @@ class TmdbService {
 
   Future<List<Movie>> getMovies() async {
     List<Movie> movies = [];
-    for (var i = 1; i <= 10; i++) {
+    for (var i = 1; i <= 5; i++) {
       movies.addAll(await tmdb.v3.discover
           .getMovies(language: "fr-FR", page: i)
           .then((value) => tmdbmoviesFromJson(jsonEncode(value))));
