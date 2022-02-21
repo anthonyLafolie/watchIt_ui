@@ -17,7 +17,6 @@ class TmdbService {
     ).then((value) => filtersTmdbFromJson(value.body));
   }
 
-  // https://api.themoviedb.org/3/discover/movie?api_key=9aed0fa917a9e58dab4d4f0e3736f214&language=fr-FR&sort_by=release_date.desc
   Future<List<Movie>> discoverMoovie() async {
     String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
     return await http.get(
@@ -25,7 +24,7 @@ class TmdbService {
           "$baseUrl/discover/movie?api_key=$apiKey&language=fr-FR&sort_by=release_date.desc&release_date.lte=$date"),
       headers: {"Content-Type": "application/json"},
     ).then((value) {
-      List<Movie> movies = moviesFromJson(value.body);
+      List<Movie> movies = tmdbmoviesFromJson(value.body);
       return movies;
     });
   }
@@ -37,7 +36,7 @@ class TmdbService {
     for (var i = 1; i <= 10; i++) {
       movies.addAll(await tmdb.v3.discover
           .getMovies(language: "fr-FR", page: i)
-          .then((value) => moviesFromJson(jsonEncode(value))));
+          .then((value) => tmdbmoviesFromJson(jsonEncode(value))));
     }
     return movies;
   }

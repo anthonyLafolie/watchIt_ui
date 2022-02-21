@@ -2,15 +2,23 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-List<Movie> moviesFromJson(String str) =>
+List<Movie> tmdbmoviesFromJson(String str) =>
     List<Movie>.from(jsonDecode(str)["results"].map((x) {
       try {
         return Movie.fromJson(x);
       } catch (e) {
-        return Movie(id: -999, title: "", posterPath: "", overview: "");
+        return const Movie(id: -999, title: "", posterPath: "", overview: "");
       }
     }))
       ..removeWhere((element) => element.id == -999);
+
+List<Movie> moviesFromJson(String str) {
+  return List<Movie>.from(jsonDecode(str).map((x) {
+    print(x);
+    print("FROM JSON" + Movie.fromJson(x).toString());
+    return Movie.fromJson(x);
+  }));
+}
 
 class Movie extends Equatable {
   final int id;
@@ -25,14 +33,28 @@ class Movie extends Equatable {
   });
 
   factory Movie.fromJson(Map<String, dynamic> parsedJson) {
+    if (parsedJson["id"] != null) {
+      return Movie(
+        id: parsedJson["id"],
+        title: parsedJson['title'],
+        posterPath: parsedJson['poster_path'],
+        overview: parsedJson['overview'],
+      );
+    }
     return Movie(
-      id: parsedJson["id"],
+      id: parsedJson["idMovie"],
       title: parsedJson['title'],
-      posterPath: parsedJson['poster_path'],
-      overview: parsedJson['overview'],
+      posterPath: parsedJson['posterPath'],
+      overview: "",
     );
   }
 
+  String toJson() => json.encode({
+        "idMovie": id,
+        "title": title,
+        "posterPath": posterPath,
+      });
+
   @override
-  List<Object> get props => [id, title, posterPath, overview];
+  List<Object?> get props => [id, title, posterPath, overview];
 }

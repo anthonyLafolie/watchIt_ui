@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/service/lists_service.dart';
 import 'package:watch_it/service/tmdb_service.dart';
 
 part 'suggestion_event.dart';
@@ -30,17 +31,20 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
 
   void _onAddWatchList(
       AddWatchList event, Emitter<SuggestionState> emit) async {
+    await ListsService().addMovieToWatchList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
     emit(SuggestionLoadedState(movies..remove(event.movies.first)));
   }
 
   void _onAddAlreadySeen(
       AddAlreadySeen event, Emitter<SuggestionState> emit) async {
+    await ListsService().addMovieToAlreadySeenList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
     emit(SuggestionLoadedState(movies..remove(event.movies.first)));
   }
 
   void _onAddDontWant(AddDontWant event, Emitter<SuggestionState> emit) async {
+    await ListsService().addMovieToDontWantSeenList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
     emit(SuggestionLoadedState(movies..remove(event.movies.first)));
   }

@@ -26,10 +26,10 @@ class SuggestionScreen extends StatelessWidget {
             if (state is SuggestionLoadedState) {
               return CarouselSlider(
                   options: CarouselOptions(
-                    height: double.infinity,
-                    scrollDirection: Axis.vertical,
-                    viewportFraction: 1,
-                  ),
+                      height: double.infinity,
+                      scrollDirection: Axis.vertical,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false),
                   items: state.movies
                       .map((e) => CarouselItem(
                             movie: e,
