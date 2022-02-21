@@ -14,8 +14,6 @@ List<Movie> tmdbmoviesFromJson(String str) =>
 
 List<Movie> moviesFromJson(String str) {
   return List<Movie>.from(jsonDecode(str).map((x) {
-    print(x);
-    print("FROM JSON" + Movie.fromJson(x).toString());
     return Movie.fromJson(x);
   }));
 }

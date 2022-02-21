@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:tmdb_api/tmdb_api.dart';
+import 'package:watch_it/common/constant.dart';
 import 'package:watch_it/model/filter_tmdb.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/service/lists_service.dart';
 
 class TmdbService {
   final String apiKey = "9aed0fa917a9e58dab4d4f0e3736f214";
@@ -17,7 +18,7 @@ class TmdbService {
     ).then((value) => filtersTmdbFromJson(value.body));
   }
 
-  Future<List<Movie>> discoverMoovie() async {
+  Future<List<Movie>> discoverMovie() async {
     String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
     return await http.get(
       Uri.parse(
@@ -31,13 +32,30 @@ class TmdbService {
 
   Future<List<Movie>> getMovies() async {
     List<Movie> movies = [];
-    final tmdb = TMDB(ApiKeys('9aed0fa917a9e58dab4d4f0e3736f214',
-        'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YWVkMGZhOTE3YTllNThkYWI0ZDRmMGUzNzM2ZjIxNCIsInN1YiI6IjYxZWVhYWIyZWEzN2UwNDk2ZDE4MDU1MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sjd6Wvwz5Ss8yWNMAFrsjuxgwXhmioeamra2-mlgmJQ'));
     for (var i = 1; i <= 10; i++) {
       movies.addAll(await tmdb.v3.discover
           .getMovies(language: "fr-FR", page: i)
           .then((value) => tmdbmoviesFromJson(jsonEncode(value))));
     }
+    return removeMovies(movies);
+  }
+
+  Future<List<Movie>> removeMovies(List<Movie> movies) async {
+    await ListsService().getWatchList().then((value) {
+      for (Movie movie in value) {
+        movies.removeWhere((element) => movie.id == element.id);
+      }
+    });
+    await ListsService().getAlreadySeenList().then((value) {
+      for (Movie movie in value) {
+        movies.removeWhere((element) => movie.id == element.id);
+      }
+    });
+    await ListsService().getDontWantSeenList().then((value) {
+      for (Movie movie in value) {
+        movies.removeWhere((element) => movie.id == element.id);
+      }
+    });
     return movies;
   }
 }
