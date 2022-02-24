@@ -16,13 +16,17 @@ class ListDetailScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.0,
       ),
-      body: Wrap(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Wrap(
           runSpacing: 5,
           spacing: 3,
           children: List.generate(
             movies.length,
             (index) => ListItem(movie: movies.elementAt(index)),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -34,7 +38,7 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      "https://image.tmdb.org/t/p/original${movie.posterPath}",
+      "https://image.tmdb.org/t/p/w500${movie.posterPath}",
       fit: BoxFit.cover,
       height: 150,
       width: 100,

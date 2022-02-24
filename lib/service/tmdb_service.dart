@@ -30,14 +30,10 @@ class TmdbService {
     });
   }
 
-  Future<List<Movie>> getMovies() async {
-    List<Movie> movies = [];
-    for (var i = 1; i <= 5; i++) {
-      movies.addAll(await tmdb.v3.discover
-          .getMovies(language: "fr-FR", page: i)
-          .then((value) => tmdbmoviesFromJson(jsonEncode(value))));
-    }
-    return removeMovies(movies);
+  Future<List<Movie>> getMovies(int page) async {
+    return await tmdb.v3.discover
+        .getMovies(language: "fr-FR", page: page)
+        .then((value) => removeMovies(tmdbmoviesFromJson(jsonEncode(value))));
   }
 
   Future<List<Movie>> removeMovies(List<Movie> movies) async {

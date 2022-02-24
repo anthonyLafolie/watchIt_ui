@@ -15,7 +15,7 @@ class CarouselItem extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            "https://image.tmdb.org/t/p/original${movie.posterPath}",
+            "https://image.tmdb.org/t/p/w780${movie.posterPath}",
             fit: BoxFit.fitHeight,
             height: double.infinity,
           ),
@@ -43,7 +43,7 @@ class CarouselItem extends StatelessWidget {
                       strokeColor: Colors.black,
                       child: const Text(
                         "Pour vous",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.grey),
                       ),
                     )
                   ],

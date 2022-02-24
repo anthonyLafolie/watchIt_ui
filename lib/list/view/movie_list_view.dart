@@ -36,7 +36,11 @@ class MovieListView extends StatelessWidget {
                   } else {
                     movies = context.read<AlreadySeenListBloc>().state.movies;
                   }
-                  Navigator.push(context, ListDetailScreen.route(movies));
+                  Navigator.push(context, ListDetailScreen.route(movies))
+                      .then((value) {
+                    context.read<WatchListBloc>().add(ListLoading());
+                    context.read<AlreadySeenListBloc>().add(ListLoading());
+                  });
                 },
               ),
             ],

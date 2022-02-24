@@ -15,7 +15,7 @@ class SuggestionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return SuggestionBloc()..add(SuggestionLoading());
+        return SuggestionBloc()..add(const SuggestionLoading([], 1, 0));
       },
       child: BlocBuilder<SuggestionBloc, SuggestionState>(
           buildWhen: (previous, current) => previous.movies != current.movies,
@@ -26,10 +26,18 @@ class SuggestionScreen extends StatelessWidget {
             if (state is SuggestionLoadedState) {
               return CarouselSlider(
                   options: CarouselOptions(
-                      height: double.infinity,
-                      scrollDirection: Axis.vertical,
-                      viewportFraction: 1,
-                      enableInfiniteScroll: false),
+                    height: double.infinity,
+                    scrollDirection: Axis.vertical,
+                    viewportFraction: 1,
+                    enableInfiniteScroll: false,
+                    initialPage: state.initialPoster,
+                    onPageChanged: (index, reason) {
+                      if (index + 1 >= state.movies.length) {
+                        context.read<SuggestionBloc>().add(SuggestionLoading(
+                            state.movies, state.page + 1, index));
+                      }
+                    },
+                  ),
                   items: state.movies
                       .map((e) => CarouselItem(
                             movie: e,
