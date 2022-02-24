@@ -30,10 +30,16 @@ class TmdbService {
     });
   }
 
-  Future<List<Movie>> getMovies(int page) async {
-    return await tmdb.v3.discover
+  Future<List> getMovies(List<Movie> movies, int page) async {
+    List<Movie> movies_fetched = await tmdb.v3.discover
         .getMovies(language: "fr-FR", page: page)
         .then((value) => removeMovies(tmdbmoviesFromJson(jsonEncode(value))));
+    if (movies_fetched.length < 10) {
+      print("RECALL");
+      return getMovies(movies_fetched, page + 1);
+    } else {
+      return [movies_fetched, page];
+    }
   }
 
   Future<List<Movie>> removeMovies(List<Movie> movies) async {

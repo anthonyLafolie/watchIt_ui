@@ -19,10 +19,10 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
   void _onSuggestionLoading(
       SuggestionLoading event, Emitter<SuggestionState> emit) async {
     emit(SuggestionLoadingState());
-    await TmdbService().getMovies(event.page).then((value) {
+    await TmdbService().getMovies(event.movies, event.page).then((value) {
       List<Movie> movies = copyList(event.movies);
-      movies.addAll(value);
-      emit(SuggestionLoadedState(movies, event.page, event.initialPoster));
+      movies.addAll(value.first);
+      emit(SuggestionLoadedState(movies, value.last, event.initialPoster));
     });
   }
 
@@ -35,23 +35,38 @@ class SuggestionBloc extends Bloc<SuggestionEvent, SuggestionState> {
       AddWatchList event, Emitter<SuggestionState> emit) async {
     await ListsService().addMovieToWatchList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
-    emit(SuggestionLoadedState(
-        movies..remove(event.movies.first), state.page, state.initialPoster));
+    if (state.movies.indexOf(event.movies.first) == state.movies.length - 2) {
+      add(SuggestionLoading(movies..remove(event.movies.first), state.page + 1,
+          state.movies.indexOf(event.movies.first)));
+    } else {
+      emit(SuggestionLoadedState(
+          movies..remove(event.movies.first), state.page, state.initialPoster));
+    }
   }
 
   void _onAddAlreadySeen(
       AddAlreadySeen event, Emitter<SuggestionState> emit) async {
     await ListsService().addMovieToAlreadySeenList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
-    emit(SuggestionLoadedState(
-        movies..remove(event.movies.first), state.page, state.initialPoster));
+    if (state.movies.indexOf(event.movies.first) == state.movies.length - 2) {
+      add(SuggestionLoading(movies..remove(event.movies.first), state.page + 1,
+          state.movies.indexOf(event.movies.first)));
+    } else {
+      emit(SuggestionLoadedState(
+          movies..remove(event.movies.first), state.page, state.initialPoster));
+    }
   }
 
   void _onAddDontWant(AddDontWant event, Emitter<SuggestionState> emit) async {
     await ListsService().addMovieToDontWantSeenList(event.movies.first);
     List<Movie> movies = copyList(state.movies);
-    emit(SuggestionLoadedState(
-        movies..remove(event.movies.first), state.page, state.initialPoster));
+    if (state.movies.indexOf(event.movies.first) == state.movies.length - 2) {
+      add(SuggestionLoading(movies..remove(event.movies.first), state.page + 1,
+          state.movies.indexOf(event.movies.first)));
+    } else {
+      emit(SuggestionLoadedState(
+          movies..remove(event.movies.first), state.page, state.initialPoster));
+    }
   }
 
   List<Movie> copyList(List<Movie> moviesToCopy) {
