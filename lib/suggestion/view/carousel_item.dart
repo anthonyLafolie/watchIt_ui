@@ -2,7 +2,6 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/common/constant.dart';
-import 'package:watch_it/list/bloc/list_bloc.dart';
 import 'package:watch_it/model/movie.dart';
 import 'package:watch_it/suggestion/bloc/suggestion_bloc.dart';
 

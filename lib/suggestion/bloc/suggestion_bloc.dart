@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:watch_it/common/constant.dart';
-import 'package:watch_it/model/filter.dart';
 import 'package:watch_it/model/filter_tmdb.dart';
 import 'package:watch_it/model/movie.dart';
 import 'package:watch_it/service/filter_service.dart';
