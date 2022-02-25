@@ -30,15 +30,14 @@ class TmdbService {
     });
   }
 
-  Future<List> getMovies(List<Movie> movies, int page) async {
-    List<Movie> movies_fetched = await tmdb.v3.discover
-        .getMovies(language: "fr-FR", page: page)
+  Future<List> getMovies(List<Movie> movies, int page, String? filter) async {
+    List<Movie> moviesFetched = await tmdb.v3.discover
+        .getMovies(language: "fr-FR", page: page, withGenres: filter)
         .then((value) => removeMovies(tmdbmoviesFromJson(jsonEncode(value))));
-    if (movies_fetched.length < 10) {
-      print("RECALL");
-      return getMovies(movies_fetched, page + 1);
+    if (moviesFetched.length < 10) {
+      return getMovies(moviesFetched, page + 1, filter);
     } else {
-      return [movies_fetched, page];
+      return [moviesFetched, page];
     }
   }
 

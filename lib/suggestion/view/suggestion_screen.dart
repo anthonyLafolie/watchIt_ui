@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watch_it/common/constant.dart';
 import 'package:watch_it/suggestion/bloc/suggestion_bloc.dart';
 import 'package:watch_it/suggestion/view/carousel_item.dart';
 
@@ -15,7 +16,8 @@ class SuggestionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return SuggestionBloc()..add(const SuggestionLoading([], 1, 0));
+        return SuggestionBloc()
+          ..add(const SuggestionLoading([], 1, 0, MODE.globalMode));
       },
       child: BlocBuilder<SuggestionBloc, SuggestionState>(
           buildWhen: (previous, current) => previous.movies != current.movies,
@@ -34,7 +36,7 @@ class SuggestionScreen extends StatelessWidget {
                     onPageChanged: (index, reason) {
                       if (index + 1 >= state.movies.length) {
                         context.read<SuggestionBloc>().add(SuggestionLoading(
-                            state.movies, state.page + 1, index));
+                            state.movies, state.page + 1, index, state.mode));
                       }
                     },
                   ),

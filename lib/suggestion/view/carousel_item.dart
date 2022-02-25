@@ -1,6 +1,8 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watch_it/common/constant.dart';
+import 'package:watch_it/list/bloc/list_bloc.dart';
 import 'package:watch_it/model/movie.dart';
 import 'package:watch_it/suggestion/bloc/suggestion_bloc.dart';
 
@@ -21,33 +23,9 @@ class CarouselItem extends StatelessWidget {
           ),
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    BorderedText(
-                      strokeWidth: 5.0,
-                      strokeJoin: StrokeJoin.round,
-                      strokeColor: Colors.black,
-                      child: const Text(
-                        "Global",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    BorderedText(
-                      strokeWidth: 5.0,
-                      strokeJoin: StrokeJoin.round,
-                      strokeColor: Colors.black,
-                      child: const Text(
-                        "Pour vous",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    )
-                  ],
-                ),
+                child: SuggestionMode(),
               ),
               Expanded(
                 child: Row(
@@ -168,6 +146,69 @@ class CarouselItem extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SuggestionMode extends StatelessWidget {
+  const SuggestionMode({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        InkWell(
+          child: BorderedText(
+            strokeWidth: 5.0,
+            strokeJoin: StrokeJoin.round,
+            strokeColor: Colors.black,
+            child: Text(
+              "Global",
+              style: TextStyle(
+                color:
+                    context.read<SuggestionBloc>().state.mode == MODE.globalMode
+                        ? Colors.white
+                        : Colors.grey,
+              ),
+            ),
+          ),
+          onTap: () {
+            if (context.read<SuggestionBloc>().state.mode != MODE.globalMode) {
+              context
+                  .read<SuggestionBloc>()
+                  .add(const SuggestionLoading([], 1, 0, MODE.globalMode));
+            }
+          },
+        ),
+        const SizedBox(width: 20),
+        InkWell(
+          child: BorderedText(
+            strokeWidth: 5.0,
+            strokeJoin: StrokeJoin.round,
+            strokeColor: Colors.black,
+            child: Text(
+              "Pour vous",
+              style: TextStyle(
+                color:
+                    context.read<SuggestionBloc>().state.mode == MODE.forYouMode
+                        ? Colors.white
+                        : Colors.grey,
+              ),
+            ),
+          ),
+          onTap: () {
+            if (context.read<SuggestionBloc>().state.mode != MODE.forYouMode) {
+              context
+                  .read<SuggestionBloc>()
+                  .add(const SuggestionLoading([], 1, 0, MODE.forYouMode));
+            }
+          },
+        )
+      ],
     );
   }
 }
