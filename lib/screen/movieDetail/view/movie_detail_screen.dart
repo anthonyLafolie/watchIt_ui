@@ -27,9 +27,7 @@ class MovieDetailScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0.0,
         ),
-        body: const SingleChildScrollView(
-          child: MovieDetailview(),
-        ),
+        body: const MovieDetailview(),
       ),
     );
   }
@@ -47,14 +45,16 @@ class MovieDetailview extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           if (state is MovieDetailLoadedState) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MovieDetailHeader(movieDetail: state.movieDetail!),
-                Categories(movieDetail: state.movieDetail!),
-                Overview(movieDetail: state.movieDetail!),
-                Casting(movieDetail: state.movieDetail!)
-              ],
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MovieDetailHeader(movieDetail: state.movieDetail!),
+                  Categories(movieDetail: state.movieDetail!),
+                  Overview(movieDetail: state.movieDetail!),
+                  Casting(movieDetail: state.movieDetail!)
+                ],
+              ),
             );
           } else {
             return Container();
