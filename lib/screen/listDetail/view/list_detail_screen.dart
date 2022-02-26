@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/screen/movieDetail/view/movie_detail_screen.dart';
 
 class ListDetailScreen extends StatelessWidget {
   final List<Movie> movies;
@@ -37,11 +38,16 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      "https://image.tmdb.org/t/p/w500${movie.posterPath}",
-      fit: BoxFit.cover,
-      height: 150,
-      width: 100,
+    return InkWell(
+      child: Image.network(
+        "https://image.tmdb.org/t/p/w500${movie.posterPath}",
+        fit: BoxFit.cover,
+        height: 150,
+        width: 100,
+      ),
+      onTap: () {
+        Navigator.push(context, MovieDetailScreen.route(movie));
+      },
     );
   }
 }
