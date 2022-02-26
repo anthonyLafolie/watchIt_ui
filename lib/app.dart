@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/authentication/authentication.dart';
 import 'package:watch_it/common/themes.dart';
-import 'package:watch_it/home/view/home_screen.dart';
-import 'package:watch_it/login/login.dart';
-import 'package:watch_it/splash/splash.dart';
+import 'package:watch_it/screen/home/view/home_screen.dart';
+import 'package:watch_it/screen/login/login.dart';
+import 'package:watch_it/screen/splash/splash.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 import 'repository/authentication_repository/authentication_repository.dart';

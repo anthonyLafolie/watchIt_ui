@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:watch_it/common/constant.dart';
+import 'package:watch_it/model/cast.dart';
 import 'package:watch_it/model/filter_tmdb.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/model/movie_detail.dart';
 import 'package:watch_it/service/lists_service.dart';
 
 class TmdbService {
@@ -16,18 +17,6 @@ class TmdbService {
       Uri.parse("$baseUrl/genre/movie/list?api_key=$apiKey&language=fr-FR"),
       headers: {"Content-Type": "application/json"},
     ).then((value) => filtersTmdbFromJson(value.body));
-  }
-
-  Future<List<Movie>> discoverMovie() async {
-    String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    return await http.get(
-      Uri.parse(
-          "$baseUrl/discover/movie?api_key=$apiKey&language=fr-FR&sort_by=release_date.desc&release_date.lte=$date"),
-      headers: {"Content-Type": "application/json"},
-    ).then((value) {
-      List<Movie> movies = tmdbmoviesFromJson(value.body);
-      return movies;
-    });
   }
 
   Future<List> getMovies(List<Movie> movies, int page, String? filter) async {
@@ -58,5 +47,12 @@ class TmdbService {
       }
     });
     return movies;
+  }
+
+  Future<MovieDetail> getMovieInfo(Movie movie) async {
+    return await tmdb.v3.movies.getDetails(movie.id, language: "fr-FR").then(
+        (detail) async => await tmdb.v3.movies.getCredits(movie.id).then(
+            (cast) =>
+                MovieDetail.fromJson(detail, castFromJson(jsonEncode(cast)))));
   }
 }
