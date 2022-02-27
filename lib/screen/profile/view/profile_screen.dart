@@ -31,12 +31,35 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(flex: 1, child: Container()),
-        const Expanded(flex: 6, child: Filters()),
-        const Expanded(flex: 3, child: Settings()),
-      ],
+    return BlocListener<FilterBloc, FilterState>(
+      listener: (context, state) {
+        if (state is FilterUpdatedState && !state.updateSucess) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Text("Vos filtres n'ont pas pu être enregistrés"),
+              ),
+            );
+        }
+        if (state is FilterUpdatedState && state.updateSucess) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Text("Vos filtres ont bien été enregistré"),
+                backgroundColor: Colors.green,
+              ),
+            );
+        }
+      },
+      child: Column(
+        children: [
+          Expanded(flex: 1, child: Container()),
+          const Expanded(flex: 6, child: Filters()),
+          const Expanded(flex: 3, child: Settings()),
+        ],
+      ),
     );
   }
 }

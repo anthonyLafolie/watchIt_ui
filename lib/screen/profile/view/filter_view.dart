@@ -50,57 +50,36 @@ class FilterList extends StatelessWidget {
           if (state is FilterLoadingState) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (state is FilterLoadedState) {
-            return Wrap(
-              spacing: 5,
-              runSpacing: 5,
-              alignment: WrapAlignment.start,
-              children: List.generate(
-                state.filters.length,
-                (index) => SizedBox(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Container(
-                      color: Colors.blue,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              state.filters[index].name,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: Checkbox(
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                              value: state.filters[index].checked,
-                              onChanged: (value) async {
-                                List<FilterTmdb> filters = state.filters
-                                    .map((e) => FilterTmdb(
-                                        id: e.id,
-                                        name: e.name,
-                                        checked: e.checked))
-                                    .toList();
-                                filters[index].checked = value!;
-                                context
-                                    .read<FilterBloc>()
-                                    .add(FilterLoaded(filters));
-                              },
-                            ),
-                          ),
-                        ],
+          return Center(
+            child: Wrap(
+                spacing: 5,
+                runSpacing: 5,
+                alignment: WrapAlignment.start,
+                children: List.generate(
+                  state.filters.length,
+                  (index) => Padding(
+                    padding: const EdgeInsets.only(right: 4.0),
+                    child: InkWell(
+                      child: Chip(
+                        label: Text(state.filters[index].name),
+                        backgroundColor: state.filters[index].checked
+                            ? Colors.blueAccent
+                            : Colors.black12,
+                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
+                      onTap: () async {
+                        List<FilterTmdb> filters = state.filters
+                            .map((e) => FilterTmdb(
+                                id: e.id, name: e.name, checked: e.checked))
+                            .toList();
+                        filters[index].checked = !filters[index].checked;
+                        context.read<FilterBloc>().add(FilterLoaded(filters));
+                      },
                     ),
                   ),
-                ),
-              ),
-            );
-          }
-          return Container();
+                )),
+          );
         });
   }
 }
