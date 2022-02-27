@@ -23,7 +23,6 @@ class MovieDetail {
 
   factory MovieDetail.fromJson(
       Map<dynamic, dynamic> parsedJson, List<Cast> cast) {
-    print(genresFromJson(parsedJson['genres']));
     return MovieDetail(
         title: parsedJson['title'],
         posterPath: parsedJson['poster_path'] ?? "",

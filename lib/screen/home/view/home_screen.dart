@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/screen/home/home.dart';
 import 'package:watch_it/screen/list/view/list_screen.dart';
-import 'package:watch_it/page_2.dart';
 import 'package:watch_it/screen/profile/view/profile_screen.dart';
 import 'package:watch_it/screen/suggestion/view/suggestion_screen.dart';
 
