@@ -66,7 +66,10 @@ class CarouselItem extends StatelessWidget {
                                 strokeWidth: 5.0,
                                 strokeJoin: StrokeJoin.round,
                                 strokeColor: Colors.black,
-                                child: const Text("Voir plus d'information >"),
+                                child: const Text(
+                                  "Voir plus d'information >",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               onTap: () => Navigator.push(
                                   context, MovieDetailScreen.route(movie))),
