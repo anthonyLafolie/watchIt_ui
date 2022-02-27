@@ -25,7 +25,11 @@ class FilterBloc extends Bloc<FilterEvent, FilterState> {
   }
 
   void _onFilterUpdate(FilterUpdate event, Emitter<FilterState> emit) async {
-    await FilterService().updateFilters(event.filters);
-    emit(FilterUpdatedState(event.filters, true));
+    try {
+      await FilterService().updateFilters(event.filters);
+      emit(FilterUpdatedState(event.filters, true));
+    } catch (e) {
+      emit(FilterUpdatedState(event.filters, false));
+    }
   }
 }

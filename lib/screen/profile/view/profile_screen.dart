@@ -39,6 +39,7 @@ class ProfileView extends StatelessWidget {
             ..showSnackBar(
               const SnackBar(
                 content: Text("Vos filtres n'ont pas pu être enregistrés"),
+                duration: Duration(seconds: 2),
               ),
             );
         }
@@ -49,6 +50,7 @@ class ProfileView extends StatelessWidget {
               const SnackBar(
                 content: Text("Vos filtres ont bien été enregistré"),
                 backgroundColor: Colors.green,
+                duration: Duration(seconds: 2),
               ),
             );
         }
