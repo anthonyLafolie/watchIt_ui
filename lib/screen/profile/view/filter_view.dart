@@ -53,30 +53,27 @@ class FilterList extends StatelessWidget {
           return Center(
             child: Wrap(
                 spacing: 5,
-                runSpacing: 5,
+                runSpacing: 7,
                 alignment: WrapAlignment.start,
                 children: List.generate(
                   state.filters.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: InkWell(
-                      child: Chip(
-                        label: Text(state.filters[index].name),
-                        backgroundColor: state.filters[index].checked
-                            ? Colors.blueAccent
-                            : Colors.black12,
-                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onTap: () async {
-                        List<FilterTmdb> filters = state.filters
-                            .map((e) => FilterTmdb(
-                                id: e.id, name: e.name, checked: e.checked))
-                            .toList();
-                        filters[index].checked = !filters[index].checked;
-                        context.read<FilterBloc>().add(FilterLoaded(filters));
-                      },
+                  (index) => InkWell(
+                    child: Chip(
+                      label: Text(state.filters[index].name),
+                      backgroundColor: state.filters[index].checked
+                          ? Colors.blueAccent
+                          : Colors.black12,
+                      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
+                    onTap: () async {
+                      List<FilterTmdb> filters = state.filters
+                          .map((e) => FilterTmdb(
+                              id: e.id, name: e.name, checked: e.checked))
+                          .toList();
+                      filters[index].checked = !filters[index].checked;
+                      context.read<FilterBloc>().add(FilterLoaded(filters));
+                    },
                   ),
                 )),
           );
