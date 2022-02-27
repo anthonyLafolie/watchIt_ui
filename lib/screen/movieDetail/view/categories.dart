@@ -13,11 +13,11 @@ class Categories extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-            children: ["Action", "Aventure"].map((category) {
+            children: movieDetail.genre.map((category) {
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: Chip(
-              label: Text(category),
+              label: Text(category.name),
               backgroundColor: Colors.black12,
             ),
           );

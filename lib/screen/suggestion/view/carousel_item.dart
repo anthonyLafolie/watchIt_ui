@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:watch_it/common/constant.dart';
 import 'package:watch_it/model/movie.dart';
+import 'package:watch_it/screen/movieDetail/view/movie_detail_screen.dart';
 import 'package:watch_it/screen/suggestion/bloc/suggestion_bloc.dart';
 
 class CarouselItem extends StatelessWidget {
@@ -59,7 +60,17 @@ class CarouselItem extends StatelessWidget {
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 15),
+                          InkWell(
+                              child: BorderedText(
+                                strokeWidth: 5.0,
+                                strokeJoin: StrokeJoin.round,
+                                strokeColor: Colors.black,
+                                child: Text("Voir plus d'information >"),
+                              ),
+                              onTap: () => Navigator.push(
+                                  context, MovieDetailScreen.route(movie))),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     )),

@@ -1,4 +1,5 @@
-import 'cast.dart';
+import 'package:watch_it/model/genre.dart';
+import 'package:watch_it/model/cast.dart';
 
 class MovieDetail {
   String title;
@@ -8,6 +9,7 @@ class MovieDetail {
   double voteAverage;
   int voteCount;
   List<Cast> cast;
+  List<Genre> genre;
 
   MovieDetail(
       {required this.title,
@@ -16,18 +18,20 @@ class MovieDetail {
       required this.overview,
       required this.voteAverage,
       required this.voteCount,
-      required this.cast});
+      required this.cast,
+      required this.genre});
 
   factory MovieDetail.fromJson(
       Map<dynamic, dynamic> parsedJson, List<Cast> cast) {
+    print(genresFromJson(parsedJson['genres']));
     return MovieDetail(
-      title: parsedJson['title'],
-      posterPath: parsedJson['poster_path'] ?? "",
-      backdropPath: parsedJson['backdrop_path'] ?? "",
-      overview: parsedJson['overview'] ?? "",
-      voteAverage: parsedJson['vote_average'] ?? "",
-      voteCount: parsedJson['vote_count'] ?? "",
-      cast: cast,
-    );
+        title: parsedJson['title'],
+        posterPath: parsedJson['poster_path'] ?? "",
+        backdropPath: parsedJson['backdrop_path'] ?? "",
+        overview: parsedJson['overview'] ?? "",
+        voteAverage: parsedJson['vote_average'] ?? "",
+        voteCount: parsedJson['vote_count'] ?? "",
+        cast: cast,
+        genre: genresFromJson(parsedJson['genres']));
   }
 }
