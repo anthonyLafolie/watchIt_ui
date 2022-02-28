@@ -10,7 +10,7 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width / 4.1,
+        width: MediaQuery.of(context).size.width / 4,
         height: 140,
         child: Image.network(
           "https://image.tmdb.org/t/p/w500${movie.posterPath}",

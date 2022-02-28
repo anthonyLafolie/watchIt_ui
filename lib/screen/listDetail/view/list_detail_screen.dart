@@ -19,12 +19,17 @@ class ListDetailScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Wrap(
-          runSpacing: 5,
-          spacing: 3,
-          children: List.generate(
-            movies.length,
-            (index) => ListItem(movie: movies.elementAt(index)),
+        child: SizedBox(
+          width: double.infinity,
+          child: Wrap(
+            runSpacing: 0,
+            spacing: 0,
+            alignment: WrapAlignment.start,
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: List.generate(
+              movies.length,
+              (index) => ListItem(movie: movies.elementAt(index)),
+            ),
           ),
         ),
       ),
@@ -43,7 +48,7 @@ class ListItem extends StatelessWidget {
         "https://image.tmdb.org/t/p/w500${movie.posterPath}",
         fit: BoxFit.cover,
         height: 150,
-        width: 100,
+        width: MediaQuery.of(context).size.width / 4,
       ),
       onTap: () {
         Navigator.push(context, MovieDetailScreen.route(movie));
