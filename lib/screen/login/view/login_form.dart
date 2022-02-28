@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:watch_it/login/login.dart';
 import 'package:formz/formz.dart';
-import 'package:watch_it/page_2.dart';
+import 'package:watch_it/screen/login/login.dart';
+import 'package:watch_it/screen/signup/view/signup_screen.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class LoginForm extends StatelessWidget {
                 content: Text(
                   "Nom d'utilisateur ou mot de passe incorrect",
                 ),
-                backgroundColor: Colors.red,
               ),
             );
         }
@@ -53,10 +52,12 @@ class _UsernameInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_usernameInput_textField'),
-          onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
+          onChanged: (username) =>
+              context.read<LoginBloc>().add(LoginUsernameChanged(username)),
           decoration: InputDecoration(
             labelText: "Nom d'utilisateur",
-            errorText: state.username.invalid ? "Nom d'utilisateur incorrect" : null,
+            errorText:
+                state.username.invalid ? "Nom d'utilisateur incorrect" : null,
           ),
         );
       },
@@ -72,7 +73,8 @@ class _PasswordInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) => context.read<LoginBloc>().add(LoginPasswordChanged(password)),
+          onChanged: (password) =>
+              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'Mot de passe',
@@ -88,7 +90,8 @@ class _RememberMeCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (previous, current) => previous.rememberMe != current.rememberMe,
+      buildWhen: (previous, current) =>
+          previous.rememberMe != current.rememberMe,
       builder: (context, state) {
         return Row(
           children: [
@@ -97,12 +100,14 @@ class _RememberMeCheckbox extends StatelessWidget {
                 value: state.rememberMe,
                 onChanged: (rememberMe) {
                   FocusScope.of(context).unfocus();
-                  context.read<LoginBloc>().add(LoginRememberMeChanged(rememberMe!));
+                  context
+                      .read<LoginBloc>()
+                      .add(LoginRememberMeChanged(rememberMe!));
                 }),
-            Text.rich(
+            const Text.rich(
               TextSpan(
                 text: "Se souvenir de moi ?",
-                style: TextStyle(color: Colors.black.withOpacity(0.8), fontSize: 14),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ],
@@ -140,15 +145,18 @@ class _SignUpText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text.rich(
-        TextSpan(text: "Vous n’avez pas de compte ?  ", style: TextStyle(color: Colors.grey.withOpacity(0.8), fontSize: 14), children: [
-          TextSpan(
-              text: "Inscrivez-vous",
-              style: const TextStyle(color: Colors.blue, fontSize: 14),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Navigator.push(context, Page2.route(Colors.purple));
-                }),
-        ]),
+        TextSpan(
+            text: "Vous n’avez pas de compte ?  ",
+            style: const TextStyle(fontSize: 14),
+            children: [
+              TextSpan(
+                  text: "Inscrivez-vous",
+                  style: const TextStyle(color: Colors.blue, fontSize: 14),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.push(context, SignupScreen.route());
+                    }),
+            ]),
       )
     ]);
   }

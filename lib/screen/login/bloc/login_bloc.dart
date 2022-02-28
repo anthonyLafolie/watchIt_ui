@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:watch_it/common/exception/bad_credential_exception.dart';
-import 'package:watch_it/login/login.dart';
+import 'package:watch_it/model/models.dart';
 import 'package:formz/formz.dart';
 import 'package:watch_it/repository/authentication_repository/authentication_repository.dart';
 
@@ -60,7 +60,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (state.status.isValidated) {
       emit(state.copyWith(status: FormzStatus.submissionInProgress));
       try {
-        await _authenticationRepository.logIn(username: state.username.value, password: state.password.value, rememberMe: state.rememberMe);
+        await _authenticationRepository.logIn(
+            username: state.username.value,
+            password: state.password.value,
+            rememberMe: state.rememberMe);
         emit(state.copyWith(status: FormzStatus.submissionSuccess));
       } on BadCredentialException {
         emit(state.copyWith(status: FormzStatus.submissionFailure));
