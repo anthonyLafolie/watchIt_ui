@@ -13,7 +13,7 @@ List<Movie> tmdbmoviesFromJson(String str) =>
       ..removeWhere((element) => element.id == -999);
 
 List<Movie> moviesFromJson(String str) {
-  return List<Movie>.from(jsonDecode(str).map((x) {
+  return List<Movie>.from(jsonDecode(utf8.decode(str.codeUnits)).map((x) {
     return Movie.fromJson(x);
   }));
 }
